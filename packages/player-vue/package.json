@@ -1,0 +1,56 @@
+{
+  "name": "easy-audio-player-vue",
+  "version": "0.0.0",
+  "description": "A simple audio player",
+  "keywords": [
+    "audio",
+    "player",
+    "web",
+    "vue",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HEKEH/easy-audio-player"
+  },
+  "license": "MIT",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
+  "scripts": {
+    "build": "vue-tsc --declaration --noEmit && vite build",
+    "watch": "vue-tsc --declaration --noEmit && vite build --watch",
+    "lint": "eslint",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "@vitejs/plugin-vue-jsx": "^4.0.1",
+    "@vue/eslint-config-prettier": "^10.1.0",
+    "@vue/eslint-config-typescript": "^14.1.3",
+    "@vue/tsconfig": "^0.5.1",
+    "easy-audio-player-shared": "workspace:*",
+    "vue-tsc": "^2.1.10"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "not ie 11"
+  ],
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "dependencies": {
+    "element-plus": "^2.0.0"
+  }
+}

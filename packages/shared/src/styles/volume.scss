@@ -1,0 +1,44 @@
+.easy-audio-player-volume-popover {
+  min-width: unset !important;
+  padding: 10px 0 8px 0 !important;
+
+  .volume-bar-wrapper {
+    height: 100px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .volume-bar {
+    width: 4px;
+    height: 100%;
+    background: #e4e4e4;
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+
+    &__fill {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: var(--e-a-player-primary-color);
+      border-radius: 2px;
+      transition: height 0.1s ease-in-out;
+    }
+
+    &__pin {
+      width: 10px;
+      height: 10px;
+      background: var(--e-a-player-primary-color);
+      border-radius: 50%;
+      position: absolute;
+      right: -3px;
+      top: -5px;
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
+    }
+  }
+}
