@@ -15,7 +15,8 @@
     "react"
   ],
   "scripts": {
-    "build": "cross-env turbo build",
+    "dev": "cross-env turbo dev",
+    "build": "cross-env turbo build --filter=!easy-audio-player-demo",
     "lint": "eslint",
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm"

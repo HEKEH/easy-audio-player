@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     server: {
+      port: 7080,
       watch: {
         ignored: [
           '!**/node_modules/easy-audio-player-vue/dist/**',

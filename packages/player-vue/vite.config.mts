@@ -36,6 +36,9 @@ export default defineConfig(({ mode }) => {
         formats: ['es', 'cjs'],
         fileName: format => `index.${format}.js`,
       },
+      watch: {
+        include: ['node_modules/easy-audio-player-vue/dist/**'],
+      },
       rollupOptions: {
         external: [
           ...Object.keys(pkg.dependencies || {}),
