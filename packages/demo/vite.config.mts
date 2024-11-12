@@ -24,5 +24,8 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias,
     },
+    build: {
+      minify: mode === 'production',
+    },
   };
 });
