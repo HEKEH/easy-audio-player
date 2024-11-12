@@ -6,7 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import dts from 'vite-plugin-dts';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
-export default defineConfig(() => {
+export default defineConfig(({ mode }) => {
   const pkg = JSON.parse(
     readFileSync(new URL('./package.json', import.meta.url), 'utf8'),
   );
@@ -15,14 +15,6 @@ export default defineConfig(() => {
     '~': resolve(__dirname, './src/'),
     '@': resolve(__dirname, './'),
   };
-
-  console.log(
-    [
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.peerDependencies || {}),
-    ],
-    'exclude',
-  );
 
   const config: UserConfig = {
     plugins: [
@@ -55,7 +47,7 @@ export default defineConfig(() => {
           },
         },
       },
-      sourcemap: true,
+      sourcemap: false,
     },
     resolve: {
       alias,

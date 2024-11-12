@@ -14,9 +14,8 @@ export default defineConfig(({ mode }) => {
     server: {
       watch: {
         ignored: [
-          // '**/node_modules/**', // need to watch node_modules for hot reload
-          '**/dist/**',
-          resolve(__dirname, '../!(demo)/**'), // ignore all apps except demo
+          '!**/node_modules/easy-audio-player-vue/dist/**',
+          '!**/node_modules/easy-audio-player-shared/dist/**',
         ],
       },
     },

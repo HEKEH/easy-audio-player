@@ -36,7 +36,7 @@ export default defineConfig(() => {
           ...Object.keys(pkg.peerDependencies || {}),
         ],
       },
-      sourcemap: true,
+      sourcemap: false,
     },
     resolve: {
       alias,
