@@ -58,19 +58,12 @@ import {
   ref,
   type PropType,
 } from 'vue';
+import type {
+  AudioPlayerOptions,
+  EasyAudioPlayerProps,
+} from 'easy-audio-player-shared';
 import PlayerVolume from './components/volume.vue';
 import PlayerProgress from './components/progress.vue';
-
-interface AudioPlayerOptions {
-  showDownloadButton?: boolean;
-}
-
-interface EasyAudioPlayerProps {
-  /** Audio source URL */
-  url: string;
-  /** Player configuration options */
-  options: AudioPlayerOptions;
-}
 
 const EasyAudioPlayer = defineComponent({
   name: 'EasyAudioPlayer',

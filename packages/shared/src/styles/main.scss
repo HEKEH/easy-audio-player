@@ -69,4 +69,10 @@
       }
     }
   }
+  svg {
+    vertical-align: middle;
+    &:focus {
+      outline: none;
+    }
+  }
 }
