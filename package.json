@@ -15,13 +15,12 @@
     "react"
   ],
   "scripts": {
-    "dev": "cross-env turbo dev",
+    "dev": "cross-env ts-node scripts/dev-start.ts",
     "build": "cross-env turbo build --filter=!easy-audio-player-demo",
     "lint": "eslint",
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm"
   },
-  "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
@@ -38,6 +37,7 @@
     "husky": "^8.0.0",
     "lint-staged": "^10.2.10",
     "prettier": "^2.8.8",
+    "ts-node": "^10.9.2",
     "turbo": "^2.1.3",
     "typescript": "^5.2.2",
     "vite": "^5.4.10",
