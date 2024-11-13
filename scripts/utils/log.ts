@@ -12,21 +12,59 @@ export enum LogColor {
   mint = '\x1b[92m', // Soft mint green
 }
 
-export function log(color: LogColor, ...args: unknown[]) {
-  const message = args
-    .map(arg => (typeof arg === 'object' ? JSON.stringify(arg) : String(arg)))
-    .join(' ');
-  console.log(`${color}${message}${LogColor.reset}`);
+function formatMessage(message: unknown | unknown[]): string {
+  return typeof message === 'object'
+    ? JSON.stringify(message)
+    : String(message);
 }
 
-export function logError(...args: unknown[]): void {
-  const message = args
-    .map(arg => (typeof arg === 'object' ? JSON.stringify(arg) : String(arg)))
-    .join(' ');
-
-  if (message.toLowerCase().includes('warning')) {
-    console.warn(`${LogColor.yellow}${message}${LogColor.reset}`);
+export function log({
+  projectName,
+  color,
+  message,
+}: {
+  projectName?: string;
+  color?: LogColor;
+  message: unknown;
+}) {
+  const formattedMessage = formatMessage(message);
+  if (projectName) {
+    console.log(
+      // color is only applied to the project name
+      `${color || LogColor.reset}[${projectName}] ${
+        LogColor.reset
+      }${formattedMessage}`,
+    );
   } else {
-    console.error(`${LogColor.red}${message}${LogColor.reset}`);
+    console.log(
+      `${color || LogColor.reset}${formattedMessage}${LogColor.reset}`,
+    );
+  }
+}
+
+export function logError({
+  projectName,
+  color,
+  message,
+}: {
+  projectName?: string;
+  /** color is only applied to the project name  */
+  color?: LogColor;
+  message: unknown;
+}): void {
+  const formattedMessage = formatMessage(message);
+
+  if (formattedMessage.toLowerCase().includes('warning')) {
+    let logMessage = `${LogColor.yellow}${formattedMessage}${LogColor.reset}`;
+    if (projectName) {
+      logMessage = `${color || LogColor.yellow}[${projectName}] ${logMessage}`;
+    }
+    console.warn(logMessage);
+  } else {
+    let logMessage = `${LogColor.red}${formattedMessage}${LogColor.reset}`;
+    if (projectName) {
+      logMessage = `${color || LogColor.red}[${projectName}] ${logMessage}`;
+    }
+    console.error(logMessage);
   }
 }

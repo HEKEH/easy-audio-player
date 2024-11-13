@@ -6,8 +6,8 @@ const runningChildProcesses: ReturnType<typeof spawn>[] = [];
 /** execute command and wait for ready signal */
 export function executeCommand(project: ProjectConfig): Promise<void> {
   return new Promise((resolve, reject) => {
-    const { logColor: projectColor } = project;
-    log(projectColor, `Starting ${project.name}...`);
+    const { logColor: color, name: projectName } = project;
+    log({ color, message: `Starting ${projectName}...` });
 
     const [cmd, ...args] = project.command.split(' ');
     const options: SpawnOptions = {
@@ -22,7 +22,7 @@ export function executeCommand(project: ProjectConfig): Promise<void> {
     // Handle process output
     childProcess.stdout?.on('data', async data => {
       const output = data.toString().trim();
-      log(projectColor, `[${project.name}] ${output}`);
+      log({ color, projectName, message: output });
 
       // Check for ready signal in output
       if (
@@ -32,18 +32,26 @@ export function executeCommand(project: ProjectConfig): Promise<void> {
           ? output.includes(project.readySignal)
           : project.readySignal.test(output))
       ) {
-        log(projectColor, `[${project.name}] is ready`);
+        log({ color, projectName, message: 'is ready' });
         resolved = true;
         resolve();
       }
     });
 
     childProcess.stderr?.on('data', data => {
-      logError(`[${project.name}] ${data.toString().trim()}`);
+      logError({
+        color,
+        projectName,
+        message: data.toString().trim(),
+      });
     });
 
     childProcess.on('error', error => {
-      logError(`[${project.name}] error:`, error);
+      logError({
+        color,
+        projectName,
+        message: error,
+      });
       reject(error);
     });
 
@@ -80,7 +88,10 @@ export async function startProjects(
 ) {
   // add listener for Ctrl+C
   process.on('SIGINT', () => {
-    log(LogColor.red, '\nReceived SIGINT. Shutting down all processes...');
+    log({
+      color: LogColor.red,
+      message: '\nReceived SIGINT. Shutting down all processes...',
+    });
     killAllChildProcesses();
     process.exit(0);
   });
@@ -93,9 +104,17 @@ export async function startProjects(
         await executeCommand(project);
       }
     }
-    log(LogColor.blue, 'All projects started successfully!');
+    log({
+      color: LogColor.blue,
+      message: 'All projects started successfully!',
+    });
   } catch (error) {
-    logError('Failed to start projects:', error);
+    logError({
+      message: 'Failed to start projects:',
+    });
+    logError({
+      message: error,
+    });
     killAllChildProcesses();
     process.exit(1);
   }
