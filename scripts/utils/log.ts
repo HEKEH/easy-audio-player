@@ -1,4 +1,4 @@
-export enum Color {
+export enum LogColor {
   reset = '\x1b[0m',
 
   red = '\x1b[91m',
@@ -12,11 +12,11 @@ export enum Color {
   mint = '\x1b[92m', // Soft mint green
 }
 
-export function log(color: Color, ...args: unknown[]) {
+export function log(color: LogColor, ...args: unknown[]) {
   const message = args
     .map(arg => (typeof arg === 'object' ? JSON.stringify(arg) : String(arg)))
     .join(' ');
-  console.log(`${color}${message}${Color.reset}`);
+  console.log(`${color}${message}${LogColor.reset}`);
 }
 
 export function logError(...args: unknown[]): void {
@@ -25,8 +25,8 @@ export function logError(...args: unknown[]): void {
     .join(' ');
 
   if (message.toLowerCase().includes('warning')) {
-    console.warn(`${Color.yellow}${message}${Color.reset}`);
+    console.warn(`${LogColor.yellow}${message}${LogColor.reset}`);
   } else {
-    console.error(`${Color.red}${message}${Color.reset}`);
+    console.error(`${LogColor.red}${message}${LogColor.reset}`);
   }
 }
