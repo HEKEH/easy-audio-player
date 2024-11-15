@@ -1,5 +1,6 @@
 {
   "name": "easy-audio-player-demo",
+  "description": "Easy Audio Player Demo",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -22,6 +23,7 @@
     "@vue/tsconfig": "^0.6.0",
     "easy-audio-player-shared": "workspace:*",
     "easy-audio-player-vue": "workspace:*",
+    "vite-plugin-html": "^3.2.2",
     "vue-tsc": "^2.1.10"
   },
   "browserslist": [
