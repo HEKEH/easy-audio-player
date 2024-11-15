@@ -7,7 +7,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:vue/vue3-essential",
+    "plugin:vue/vue3-recommended",
     "prettier"
   ],
   "overrides": [
@@ -26,11 +26,13 @@
     "parser": "@typescript-eslint/parser",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "vue", "prettier", "import"],
+  "plugins": ["@typescript-eslint", "prettier", "import"],
   "rules": {
+    "no-multiple-template-root": "off",
     "prettier/prettier": "error",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "vue/no-multiple-template-root": "off",
     "import/order": [
       "error",
       {
