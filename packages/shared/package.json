@@ -23,9 +23,7 @@
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },
-  "devDependencies": {
-    "sass": "^1.80.6"
-  },
+  "devDependencies": {},
   "browserslist": [
     "> 1%",
     "not ie 11"

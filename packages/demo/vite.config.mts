@@ -13,6 +13,9 @@ export default defineConfig(({ mode }) => {
   return {
     server: {
       port: 7080,
+      hmr: {
+        overlay: true,
+      },
       watch: {
         ignored: [
           '!**/node_modules/easy-audio-player-vue/dist/**',
@@ -23,9 +26,18 @@ export default defineConfig(({ mode }) => {
     plugins: [vue(), vueJsx()],
     resolve: {
       alias,
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
     },
     build: {
       minify: mode === 'production',
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['vue', 'vue-router'],
+          },
+        },
+      },
     },
   };
 });
