@@ -2,7 +2,7 @@
   "name": "easy-audio-player",
   "version": "0.0.0",
   "description": "A simple audio player",
-  "packageManager": "^pnpm@7.13.0",
+  "packageManager": "pnpm@9.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/HEKEH/easy-audio-player"
