@@ -21,12 +21,12 @@ export default defineConfig(({ mode }) => {
       vue() as PluginOption,
       vueJsx() as PluginOption,
       cssInjectedByJsPlugin(),
-      dts({
-        include: ['src/**/*.ts', 'src/**/*.vue'],
-        outDir: 'dist',
-        tsconfigPath: './tsconfig.build.json',
-        rollupTypes: true,
-      }),
+      // dts({
+      //   include: ['src/**/*.ts', 'src/**/*.vue'],
+      //   outDir: 'dist',
+      //   tsconfigPath: './tsconfig.build.json',
+      //   rollupTypes: true,
+      // }),
     ],
     build: {
       minify: false,

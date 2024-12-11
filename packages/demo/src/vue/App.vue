@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="margin-top: 50px">
     <h1>Vue Easy Audio Player</h1>
     <EasyAudioPlayer :options="options" :url="url" />
   </div>

@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { ElPopover } from 'element-plus';
+import { ElPopover } from '@hekeh/el-popover';
 import { computed, defineComponent, onBeforeUnmount, ref, watch } from 'vue';
 
 const useVolume = (setVolume: (volume: number) => void) => {
