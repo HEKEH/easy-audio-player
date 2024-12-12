@@ -134,7 +134,7 @@ const useVolume = (setVolume: (volume: number) => void) => {
 const PlayerVolume = defineComponent({
   name: 'PlayerVolume',
   components: {
-    ElPopover,
+    ElPopover: ElPopover as any,
   },
 
   emits: {

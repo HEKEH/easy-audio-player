@@ -115,8 +115,8 @@ importers:
   packages/player-vue:
     dependencies:
       '@hekeh/el-popover':
-        specifier: ^0.1.2
-        version: 0.1.2(vue@3.5.13)
+        specifier: ^0.1.4
+        version: 0.1.4(vue@3.5.13)
       vue:
         specifier: ^3.0.0
         version: 3.5.13(typescript@5.5.4)
@@ -847,12 +847,13 @@ packages:
       levn: 0.4.1
     dev: true
 
-  /@hekeh/el-popover@0.1.2(vue@3.5.13):
-    resolution: {integrity: sha512-MK5yEodDl+cW02+MAE4wC4qVgK0QitgR30+3pfgkNZ3g8HWPvZ7yoKWDkgJTcFEhBLimKlou9+1jSEU7djXS/g==}
+  /@hekeh/el-popover@0.1.4(vue@3.5.13):
+    resolution: {integrity: sha512-eg1EsOY3Aql8hjKo3wD/hgBqm6ttpzwsAdfT5YrIlY7Ljm2QSPs9NZGgrWyMyYlb1MxX/TOMKcIXbRLfQjo/yQ==}
     requiresBuild: true
     peerDependencies:
       vue: ^3.0.0
     dependencies:
+      '@popperjs/core': 2.11.8
       vue: 3.5.13(typescript@5.5.4)
     dev: false
 
@@ -1139,6 +1140,10 @@ packages:
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dev: true
+
+  /@popperjs/core@2.11.8:
+    resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
+    dev: false
 
   /@rollup/pluginutils@4.2.1:
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
