@@ -31,7 +31,8 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@hekeh/el-popover": "^0.1.4"
+    "@hekeh/el-popover": "^1.0.0",
+    "element-plus": "^2.9.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.4",

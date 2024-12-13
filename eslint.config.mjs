@@ -39,7 +39,6 @@ export default [
     },
     rules: {
       // Vue related rules
-      'vue/no-multiple-template-root': 'off',
       'vue/multi-word-component-names': 'error',
       'vue/component-name-in-template-casing': ['error', 'PascalCase'],
       'vue/no-unused-components': 'error',
