@@ -25,8 +25,11 @@
     }
   },
   "scripts": {
-    "dev": "vue-tsc --declaration --noEmit && vite build --watch",
-    "build": "vue-tsc --declaration --noEmit && vite build",
+    "check:types": "vue-tsc --declaration --noEmit -p tsconfig.build.json",
+    "dev": "pnpm run check:types && vite build --watch",
+    "build": "pnpm run check:types && vite build",
+    "copy:readme": "cp ../../README.md .  && cp ../../README.zh-cn.md .",
+    "before:publish": "pnpm run build && pnpm run copy:readme",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },

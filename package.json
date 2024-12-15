@@ -17,6 +17,7 @@
   "scripts": {
     "dev": "cross-env ts-node scripts/dev-start.ts",
     "build": "cross-env turbo build --filter=!easy-audio-player-demo",
+    "publish": "ts-node scripts/publish.ts",
     "lint": "eslint",
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm"

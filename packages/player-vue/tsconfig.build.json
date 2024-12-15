@@ -1,15 +1,7 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.tsx", "**/*.d.ts"],
-  "exclude": ["src/**/__tests__/*"],
+  "extends": "./tsconfig.app.json",
+
   "compilerOptions": {
-    "composite": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "types": ["vite/client"],
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./src/*"],
-      "@/*": ["./*"]
-    }
+    "rootDir": "../../"
   }
 }
