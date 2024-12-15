@@ -51,6 +51,8 @@
   ],
   "files": [
     "dist",
-    "package.json"
+    "package.json",
+    "README.md",
+    "README.zh-cn.md"
   ]
 }
