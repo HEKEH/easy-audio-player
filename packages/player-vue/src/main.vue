@@ -110,7 +110,7 @@ const EasyAudioPlayer = defineComponent({
           isPlaying.value = false;
         }
       } catch (error) {
-        console.error('Playback failed:', error);
+        console.error('Play fail:', error);
       } finally {
         isLoading.value = false;
       }
@@ -139,6 +139,14 @@ const EasyAudioPlayer = defineComponent({
         player.value?.removeEventListener(event, handler);
       });
     });
+    const downloadAudio = () => {
+      const link = document.createElement('a');
+      link.href = props.url;
+      link.download = props.url.split('/').pop() || 'audio';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
     return {
       container,
       player,
@@ -148,7 +156,7 @@ const EasyAudioPlayer = defineComponent({
         () => props.options.showDownloadButton ?? true,
       ),
       togglePlay,
-      downloadAudio: () => window.open(props.url, '_blank'),
+      downloadAudio,
       onUpdateVolume,
     };
   },

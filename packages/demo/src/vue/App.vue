@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { AudioPlayerOptions } from 'easy-audio-player-shared';
-import EasyAudioPlayer from 'easy-audio-player-vue';
+import EasyAudioPlayer from '@hekeh/easy-audio-player-vue';
 
 const options: AudioPlayerOptions = {
   showDownloadButton: true,

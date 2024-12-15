@@ -18,7 +18,7 @@
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./*"],
-      "easy-audio-player-vue": ["../player-vue/src/index.ts"],
+      "@hekeh/easy-audio-player-vue": ["../player-vue/src/index.ts"],
       "easy-audio-player-shared": ["../shared/src/index.ts"]
     }
   }

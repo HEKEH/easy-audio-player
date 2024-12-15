@@ -14,7 +14,7 @@ const projects: Array<ProjectConfig | Array<ProjectConfig>> = [
   // order 2
   [
     {
-      name: 'easy-audio-player-vue',
+      name: '@hekeh/easy-audio-player-vue',
       path: join(__dirname, '../packages/player-vue'),
       command: 'pnpm dev',
       readySignal: /^built in \d+ms\.$/,
