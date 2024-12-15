@@ -1,5 +1,6 @@
 export interface AudioPlayerOptions {
   showDownloadButton?: boolean;
+  stopOthersOnPlay?: boolean;
 }
 
 export interface EasyAudioPlayerProps {

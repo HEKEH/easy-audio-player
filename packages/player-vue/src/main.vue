@@ -56,6 +56,7 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
+  useId,
   type PropType,
 } from 'vue';
 import type {
@@ -88,26 +89,33 @@ const EasyAudioPlayer = defineComponent({
     const player = ref<HTMLAudioElement | null>(null);
     const isPlaying = ref(false);
     const isLoading = ref(false);
+    const { stopOthersOnPlay = true } = props.options;
 
     const onUpdateVolume = (volume: number) => {
       if (!player.value) return;
       player.value.volume = volume;
     };
 
+    const closePlayer = () => {
+      player.value?.pause();
+      isPlaying.value = false;
+    };
+
+    const { stopOtherPlayers } = useStopOtherPlayers(closePlayer);
+
     const togglePlay = async () => {
       if (!player.value) return;
 
       try {
         if (player.value.paused) {
-          // if (props.options.stopOthersOnPlay) {
-          //   stopOtherPlayers();
-          // }
+          if (stopOthersOnPlay) {
+            stopOtherPlayers();
+          }
           isLoading.value = true;
           await player.value.play();
           isPlaying.value = true;
         } else {
-          player.value.pause();
-          isPlaying.value = false;
+          closePlayer();
         }
       } catch (error) {
         console.error('Play fail:', error);
@@ -161,6 +169,41 @@ const EasyAudioPlayer = defineComponent({
     };
   },
 });
+
+const useStopOtherPlayers = (closePlayer: () => void) => {
+  const EventName = 'stop-easy-audio-player';
+  const id = useId();
+  const stopOtherPlayers = () => {
+    document.dispatchEvent(
+      new CustomEvent(EventName, {
+        detail: { excludedId: id },
+      }),
+    );
+  };
+
+  const stopOtherPlayersHandler = (
+    event: CustomEvent<{
+      excludedId: string;
+    }>,
+  ) => {
+    if (event.detail.excludedId === id) return;
+    closePlayer();
+  };
+
+  onMounted(() => {
+    document.addEventListener(
+      EventName,
+      stopOtherPlayersHandler as EventListener,
+    );
+  });
+  onBeforeUnmount(() => {
+    document.removeEventListener(
+      EventName,
+      stopOtherPlayersHandler as EventListener,
+    );
+  });
+  return { stopOtherPlayers };
+};
 
 export default EasyAudioPlayer;
 </script>
