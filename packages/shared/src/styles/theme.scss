@@ -1,4 +1,4 @@
-$prefix: --e-a-player-;
+@use 'mixins/function.scss' as *;
 
 $colors: (
   'text-color': #566574,
@@ -14,11 +14,11 @@ $sizes: (
 html {
   // color variables
   @each $name, $value in $colors {
-    #{$prefix}#{$name}: #{$value};
+    #{getCssVarName($name)}: #{$value};
   }
 
   // size variables
   @each $name, $value in $sizes {
-    #{$prefix}#{$name}: #{$value};
+    #{getCssVarName($name)}: #{$value};
   }
 }

@@ -4,15 +4,15 @@
     trigger="hover"
     width="auto"
     :show-arrow="false"
-    popper-class="easy-audio-player-volume-popover"
+    :popper-class="bem('volume', 'popover')"
     :offset="2"
   >
     <template #reference>
-      <button class="control-btn" @click="toggleVolumeOpen">
+      <button :class="bem('control-btn')" @click="toggleVolumeOpen">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 22 22"
-          class="control-btn__icon"
+          :class="bem('control-btn', 'icon')"
         >
           <template v-if="volume === 0">
             <path
@@ -35,15 +35,15 @@
       </button>
     </template>
 
-    <div class="volume-bar-wrapper" ref="volumeBarWrapper">
-      <div class="volume-bar" @click="handleVolumeBarClick">
+    <div :class="bem('volume-bar', 'wrapper')" ref="volumeBarWrapper">
+      <div :class="bem('volume-bar')" @click="handleVolumeBarClick">
         <div
-          class="volume-bar__fill"
+          :class="bem('volume-bar', 'fill')"
           ref="volumeBar"
           :style="{ height: `${volume * 100}%` }"
         >
           <div
-            class="volume-bar__pin"
+            :class="bem('volume-bar', 'pin')"
             ref="volumeBarPin"
             @mousedown="startDraggingVolume"
             @dragstart.prevent
@@ -57,6 +57,7 @@
 <script lang="ts">
 import { ElPopover } from '@hekeh/el-popover';
 import { computed, defineComponent, onBeforeUnmount, ref, watch } from 'vue';
+import { bem } from 'easy-audio-player-shared';
 
 const useVolume = (setVolume: (volume: number) => void) => {
   const volumeBar = ref<HTMLElement | null>(null);
@@ -166,6 +167,7 @@ const PlayerVolume = defineComponent({
       handleVolumeBarClick,
       startDraggingVolume,
       toggleVolumeOpen,
+      bem,
     };
   },
 });

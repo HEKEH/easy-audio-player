@@ -1,16 +1,19 @@
 <template>
   <!-- Progress Bar -->
-  <div class="player-progress">
-    <span class="controls__current-time">{{ currentTime }}</span>
-    <div class="progress-bar-wrapper" @click="handleProgressBarClick">
-      <div class="progress-bar">
+  <div :class="bem('progress')">
+    <span :class="bem('progress', 'current-time')">{{ currentTime }}</span>
+    <div
+      :class="bem('progress-bar', 'wrapper')"
+      @click="handleProgressBarClick"
+    >
+      <div :class="bem('progress-bar')">
         <div
-          class="progress-bar__fill"
+          :class="bem('progress-bar', 'fill')"
           ref="progressBar"
           :style="{ width: `${percent * 100}%` }"
         >
           <div
-            class="progress-bar__pin"
+            :class="bem('progress-bar', 'pin')"
             ref="progressBarPin"
             @mousedown="startDraggingProcess"
             @dragstart.prevent
@@ -18,7 +21,7 @@
         </div>
       </div>
     </div>
-    <span class="controls__total-time">{{ totalTime }}</span>
+    <span :class="bem('progress', 'total-time')">{{ totalTime }}</span>
   </div>
 </template>
 
@@ -33,6 +36,7 @@ import {
   type Ref,
 } from 'vue';
 import { formatTime } from 'easy-audio-player-shared';
+import { bem } from 'easy-audio-player-shared';
 
 const useProcess = (player: Ref<HTMLAudioElement | null>) => {
   const progressBar = ref<HTMLElement | null>(null);
@@ -164,6 +168,7 @@ const PlayerProgress = defineComponent({
       updateProgress,
       handleProgressBarClick,
       startDraggingProcess,
+      bem,
     };
   },
 });

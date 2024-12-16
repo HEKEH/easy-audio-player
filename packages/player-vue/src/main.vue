@@ -1,16 +1,19 @@
 <template>
-  <div class="easy-audio-player" ref="container">
-    <div class="player-controls">
+  <div :class="namespace" ref="container">
+    <div :class="bem('controls')">
       <!-- Play/Pause Button -->
       <button
-        :class="['play-pause-btn', { loading: isLoading }]"
+        :class="[
+          bem('pause-btn'),
+          { [bem('pause-btn', '', 'loading')]: isLoading },
+        ]"
         @click="togglePlay"
         :disabled="isLoading"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 18 24"
-          class="play-pause-btn__icon"
+          :class="bem('pause-btn', 'icon')"
         >
           <path
             fill-rule="evenodd"
@@ -22,19 +25,19 @@
       <!-- Progress Bar -->
       <player-progress :player="player" />
 
-      <div class="right-controls">
+      <div :class="bem('right-controls')">
         <!-- Volume Controls -->
         <player-volume @update:volume="onUpdateVolume" />
         <!-- Download Button -->
         <button
           v-if="showDownloadButton"
-          class="control-btn"
+          :class="bem('control-btn')"
           @click="downloadAudio"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            class="control-btn__icon"
+            :class="bem('control-btn', 'icon')"
           >
             <path
               fill-rule="evenodd"
@@ -65,6 +68,7 @@ import type {
 } from 'easy-audio-player-shared';
 import PlayerVolume from './components/volume.vue';
 import PlayerProgress from './components/progress.vue';
+import { namespace, bem } from 'easy-audio-player-shared';
 
 const EasyAudioPlayer = defineComponent({
   name: 'EasyAudioPlayer',
@@ -163,9 +167,11 @@ const EasyAudioPlayer = defineComponent({
       showDownloadButton: computed(
         () => props.options.showDownloadButton ?? true,
       ),
+      namespace,
       togglePlay,
       downloadAudio,
       onUpdateVolume,
+      bem,
     };
   },
 });

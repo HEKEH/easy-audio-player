@@ -1,76 +1,84 @@
-.easy-audio-player {
+@use 'mixins/function.scss' as *;
+@use 'mixins/config.scss';
+
+.#{config.$namespace} {
   width: 100%;
   min-width: 300px;
-  height: var(--e-a-player-height);
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.07);
+  height: getCssVar('height');
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 15px;
+  background-color: getCssVar('background-color');
   border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
   user-select: none;
-  background-color: var(--e-a-player-background-color);
   cursor: default;
 
-  .player-controls {
+  .#{bem('controls')} {
     display: flex;
     align-items: center;
     width: 100%;
     gap: 8px;
   }
 
-  .play-pause-btn {
-    height: 28px;
-    padding: 0 2px;
-    border: none;
-    cursor: pointer;
+  .#{bem('pause-btn')} {
     display: flex;
-    background: transparent;
     justify-content: center;
     align-items: center;
+    height: 28px;
+    padding: 0 2px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 
-    &.loading {
-      opacity: 0.5;
-      cursor: wait;
-    }
-    &__icon {
+    .#{bem('pause-btn', 'icon')} {
       width: 12px;
       height: 16px;
-      fill: var(--e-a-player-icon-color);
+      fill: getCssVar('icon-color');
     }
+
     &:hover {
       opacity: 0.8;
     }
+
+    &.#{bem('pause-btn', '', 'loading')} {
+      opacity: 0.5;
+      cursor: wait;
+    }
   }
 
-  .right-controls {
+  .#{bem('right-controls')} {
     position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
 
-    .control-btn {
-      border: none;
-      background: none;
-      cursor: pointer;
+    .#{bem('control-btn')} {
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
 
-      &__icon {
+      .#{bem('control-btn', 'icon')} {
         width: 18px;
         height: 18px;
-        fill: var(--e-a-player-icon-color);
-        color: var(--e-a-player-icon-color);
+        fill: getCssVar('icon-color');
+        color: getCssVar('icon-color');
       }
+
       &:hover {
         opacity: 0.8;
       }
     }
   }
+
   svg {
     vertical-align: middle;
+
     &:focus {
       outline: none;
     }
