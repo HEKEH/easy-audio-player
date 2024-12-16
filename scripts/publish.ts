@@ -1,22 +1,33 @@
 import { execSync } from 'child_process';
 
+const execSyncWithError = (command: string) => {
+  try {
+    return execSync(command, { stdio: 'inherit' });
+  } catch (error) {
+    console.error('\n[ERROR] Command failed:', command);
+    if (error instanceof Error) {
+      console.error('\nError details:');
+      console.error(error.message);
+      // 如果需要更详细的信息，可以把整个error对象打印出来
+      console.error('\nFull error object:', error);
+    }
+    process.exit(1);
+  }
+};
+
 const publishPackage = (packagePath: string) => {
   const originalDir = process.cwd();
-  // Navigate to package directory
-  console.log('[INFO] Navigating to package directory...');
+  console.log(`[INFO] Navigating to package directory ${packagePath}...`);
   process.chdir(packagePath);
 
-  // Build
-  console.log('[INFO] Preparing publish...');
-  execSync('pnpm run before:publish');
+  console.log(`[INFO] Preparing publish ${packagePath}...`);
+  execSyncWithError('pnpm run before:publish');
 
-  // Publish
-  console.log('[INFO] Publishing easy-audio-player-vue to npm...');
-  execSync('pnpm publish --access public');
+  console.log(`[INFO] Publishing ${packagePath} to npm...`);
+  execSyncWithError('pnpm publish --access public');
 
   console.log('[SUCCESS] ==== Package published successfully! ====');
 
-  // Return to root directory
   console.log('[INFO] Returning to root directory...');
   process.chdir(originalDir);
 };
@@ -24,10 +35,14 @@ const publishPackage = (packagePath: string) => {
 const main = () => {
   console.log('[INFO] ==== Starting publish process ====');
 
-  // Install dependencies
   console.log('[INFO] Installing dependencies...');
-  execSync('pnpm install');
+  execSyncWithError('pnpm install');
+
+  console.log('[INFO] Building packages...');
+  execSyncWithError('pnpm build');
+
   publishPackage('packages/player-vue');
+  publishPackage('packages/player-react');
 };
 
 main();

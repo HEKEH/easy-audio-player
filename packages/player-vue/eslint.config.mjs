@@ -1,4 +1,5 @@
 import vuePlugin from 'eslint-plugin-vue';
+import vueParser from '@vue/eslint-parser';
 
 import baseConfig from '../../eslint.config.mjs';
 
@@ -8,6 +9,9 @@ export default [
     files: ['**/*.{js,jsx,ts,tsx,vue}'],
     plugins: {
       vue: vuePlugin,
+    },
+    languageOptions: {
+      parser: vueParser,
     },
     rules: {
       'vue/multi-word-component-names': 'error',

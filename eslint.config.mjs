@@ -40,7 +40,7 @@ export default [
     rules: {
       // 基础代码风格规则
       'prettier/prettier': 'error',
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-console': 'off',
       curly: ['error', 'all'],
 
       // TypeScript基础规则

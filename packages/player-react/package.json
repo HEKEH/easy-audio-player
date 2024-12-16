@@ -28,7 +28,7 @@
     "dev": "pnpm run check:types && vite build --watch",
     "build": "pnpm run check:types && vite build",
     "copy:readme": "ts-node scripts/copy-readme.ts",
-    "before:publish": "pnpm run build && pnpm run copy:readme",
+    "before:publish": "pnpm run copy:readme",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },

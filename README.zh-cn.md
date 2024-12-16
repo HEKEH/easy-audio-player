@@ -4,11 +4,13 @@
 
 ## 介绍
 
-Easy Audio Player 是一个简单的音频播放器，支持 Vue 3。
+Easy Audio Player 是一个简单的音频播放器，支持 Vue 3 和 React。
 
 ![视图](img/demo.png)
 
 ## 安装
+
+### Vue 3
 
 ```bash
 # 使用 npm
@@ -19,6 +21,19 @@ yarn add @hekeh/easy-audio-player-vue
 
 # 使用 pnpm
 pnpm add @hekeh/easy-audio-player-vue
+```
+
+### React
+
+```bash
+# Using npm
+npm install @hekeh/easy-audio-player-react
+
+# Using yarn
+yarn add @hekeh/easy-audio-player-react
+
+# Using pnpm
+pnpm add @hekeh/easy-audio-player-react
 ```
 
 ## 参数
