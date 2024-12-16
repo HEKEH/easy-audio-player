@@ -1,11 +1,12 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "extends": "../../tsconfig.json",
   "include": [
-    "env.d.ts",
-    "src/**/*.ts",
-    "src/**/*.vue",
-    "../shared/src/**/*.ts",
-    "../shared/src/**/*.vue"
+    "src/vue/**/*.vue",
+    "src/vue/**/*.ts",
+    "../player-vue/src/**/*.vue",
+    "../player-vue/src/**/*.ts",
+    "../shared/src/**/*.vue",
+    "../shared/src/**/*.ts"
   ],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
@@ -16,6 +17,7 @@
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./*"],
+      "@hekeh/easy-audio-player-vue": ["../player-vue/src/index.ts"],
       "easy-audio-player-shared": ["../shared/src/index.ts"]
     }
   }

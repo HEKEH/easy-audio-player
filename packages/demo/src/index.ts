@@ -1,5 +1,12 @@
+// @ts-nocheck
 import { createApp as createVueApp } from 'vue';
-import App from './vue/App.vue';
+import { createElement } from 'react';
+import { createRoot as createReactRoot } from 'react-dom/client';
+import VueApp from './vue';
+import ReactApp from './react';
 import './style/global.scss';
 
-createVueApp(App).mount('#vue-app');
+createVueApp(VueApp).mount('#vue-app');
+createReactRoot(document.getElementById('react-app')!).render(
+  createElement(ReactApp),
+);

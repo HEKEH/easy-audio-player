@@ -20,7 +20,13 @@ const projects: Array<ProjectConfig | Array<ProjectConfig>> = [
       readySignal: /^built in \d+ms\.$/,
       logColor: LogColor.seafoam,
     },
-    // TODO: add easy-audio-player-react
+    {
+      name: '@hekeh/easy-audio-player-react',
+      path: join(__dirname, '../packages/player-react'),
+      command: 'pnpm dev',
+      readySignal: /^built in \d+ms\.$/,
+      logColor: LogColor.deepBlue,
+    },
   ],
   // order 3
   {

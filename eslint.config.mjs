@@ -3,15 +3,20 @@ import tsEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import prettierPlugin from 'eslint-plugin-prettier';
 import importPlugin from 'eslint-plugin-import';
-import vuePlugin from 'eslint-plugin-vue';
 import prettier from 'eslint-config-prettier';
 
 export default [
-  // Base configurations
   eslint.configs.recommended,
   prettier,
   {
-    ignores: ['node_modules/*', 'log/*', 'static/*', '**/dist/*'],
+    ignores: [
+      '**/node_modules/*',
+      '**/dist/*',
+      '**/build/*',
+      '**/coverage/*',
+      '**/.next/*',
+      '**/public/*',
+    ],
   },
   {
     languageOptions: {
@@ -28,45 +33,36 @@ export default [
       node: true,
     },
   },
-
-  // Plugin configurations
   {
     plugins: {
       '@typescript-eslint': tsEslint,
       prettier: prettierPlugin,
       import: importPlugin,
-      vue: vuePlugin,
     },
     rules: {
-      // Vue related rules
-      'vue/multi-word-component-names': 'error',
-      'vue/component-name-in-template-casing': ['error', 'PascalCase'],
-      'vue/no-unused-components': 'error',
-
-      // TypeScript related rules
+      // 基础代码风格规则
       'prettier/prettier': 'error',
-      '@typescript-eslint/no-non-null-assertion': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/explicit-function-return-type': 'warn',
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      curly: ['error', 'all'],
+
+      // TypeScript基础规则
+      '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_' },
       ],
 
-      // Import related rules
+      // Import规则
       'import/order': [
         'error',
         {
-          groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
-          pathGroups: [
-            {
-              pattern: '~/**',
-              group: 'external',
-            },
-            {
-              pattern: '@/**',
-              group: 'external',
-            },
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
           ],
           'newlines-between': 'always',
           alphabetize: {
@@ -76,10 +72,6 @@ export default [
         },
       ],
       'import/no-duplicates': 'error',
-
-      // General rules
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
-      curly: ['error', 'all'],
     },
   },
 ];

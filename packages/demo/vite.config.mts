@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { AliasOptions, defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
+import react from '@vitejs/plugin-react';
 import pkg from './package.json';
 import { createHtmlPlugin } from 'vite-plugin-html';
 
@@ -21,13 +21,14 @@ export default defineConfig(({ mode }) => {
       watch: {
         ignored: [
           '!**/node_modules/easy-audio-player-vue/dist/**',
+          '!**/node_modules/easy-audio-player-react/dist/**',
           '!**/node_modules/easy-audio-player-shared/dist/**',
         ],
       },
     },
     plugins: [
       vue(),
-      vueJsx(),
+      react(),
       createHtmlPlugin({
         inject: {
           data: {
@@ -46,7 +47,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            vendor: ['vue', 'vue-router'],
+            vendor: ['vue', 'vue-router', 'react', 'react-dom'],
           },
         },
       },
