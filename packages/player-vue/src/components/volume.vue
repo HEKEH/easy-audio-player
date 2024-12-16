@@ -63,7 +63,6 @@ const useVolume = (setVolume: (volume: number) => void) => {
   const volumeBar = ref<HTMLElement | null>(null);
   const volumeBarPin = ref<HTMLElement | null>(null);
   const volumeBarWrapper = ref<HTMLElement | null>(null);
-  const isDraggingVolume = ref(false);
   const volumePercentage = ref(1);
   const isVolumeOpen = ref(true);
 
@@ -80,7 +79,6 @@ const useVolume = (setVolume: (volume: number) => void) => {
   const startDraggingVolume = (event: MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
-    isDraggingVolume.value = true;
     document.addEventListener('mousemove', handleDraggingVolume);
     document.addEventListener('mouseup', stopDraggingVolume);
   };
@@ -101,7 +99,6 @@ const useVolume = (setVolume: (volume: number) => void) => {
   };
 
   const stopDraggingVolume = () => {
-    isDraggingVolume.value = false;
     removeDraggingVolumeListeners();
   };
 

@@ -35,8 +35,7 @@ import {
   type PropType,
   type Ref,
 } from 'vue';
-import { formatTime } from 'easy-audio-player-shared';
-import { bem } from 'easy-audio-player-shared';
+import { formatTime, bem } from 'easy-audio-player-shared';
 
 const useProcess = (player: Ref<HTMLAudioElement | null>) => {
   const progressBar = ref<HTMLElement | null>(null);
