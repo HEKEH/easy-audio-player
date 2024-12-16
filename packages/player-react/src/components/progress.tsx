@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
 import { formatTime, bem } from 'easy-audio-player-shared';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface PlayerProgressProps {
   player: HTMLAudioElement | null;
@@ -13,17 +13,21 @@ const useProcess = (player: HTMLAudioElement | null) => {
   const [isDragging, setIsDragging] = useState(false);
   const [percent, setPercent] = useState(0);
 
-  const updateProgress = () => {
-    if (!player || !progressBarRef.current || isDragging) return;
+  const updateProgress = useCallback(() => {
+    if (!player || !progressBarRef.current || isDragging) {
+      return;
+    }
 
     const current = player.currentTime;
     const duration = player.duration;
     setPercent(current / duration);
     setCurrentTime(formatTime(current));
-  };
+  }, [isDragging, player]);
 
   const handleProgressBarClick = (event: React.MouseEvent) => {
-    if (!player || !progressBarRef.current?.parentElement) return;
+    if (!player || !progressBarRef.current?.parentElement) {
+      return;
+    }
 
     const bounds = progressBarRef.current.parentElement.getBoundingClientRect();
     const x = event.clientX - bounds.left;
@@ -33,21 +37,30 @@ const useProcess = (player: HTMLAudioElement | null) => {
     player.currentTime = newPercent * player.duration;
   };
 
-  const handleDraggingProcess = (event: MouseEvent) => {
-    if (!player || !progressBarRef.current?.parentElement) return;
+  const handleDraggingProcess = useCallback(
+    (event: MouseEvent) => {
+      if (!player || !progressBarRef.current?.parentElement) {
+        return;
+      }
 
-    const bounds = progressBarRef.current.parentElement.getBoundingClientRect();
-    const x = Math.max(0, Math.min(event.clientX - bounds.left, bounds.width));
-    const newPercent = x / bounds.width;
-    setPercent(newPercent);
-    player.currentTime = newPercent * player.duration;
-  };
+      const bounds =
+        progressBarRef.current.parentElement.getBoundingClientRect();
+      const x = Math.max(
+        0,
+        Math.min(event.clientX - bounds.left, bounds.width),
+      );
+      const newPercent = x / bounds.width;
+      setPercent(newPercent);
+      player.currentTime = newPercent * player.duration;
+    },
+    [player],
+  );
 
-  const stopDraggingProcess = () => {
+  const stopDraggingProcess = useCallback(() => {
     setIsDragging(false);
     document.removeEventListener('mousemove', handleDraggingProcess);
     document.removeEventListener('mouseup', stopDraggingProcess);
-  };
+  }, [handleDraggingProcess]);
 
   const startDraggingProcess = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -58,7 +71,9 @@ const useProcess = (player: HTMLAudioElement | null) => {
   };
 
   useEffect(() => {
-    if (!player) return;
+    if (!player) {
+      return;
+    }
 
     const handleLoadedMetadata = () => {
       setTotalTime(formatTime(player.duration));
@@ -73,7 +88,7 @@ const useProcess = (player: HTMLAudioElement | null) => {
       document.removeEventListener('mousemove', handleDraggingProcess);
       document.removeEventListener('mouseup', stopDraggingProcess);
     };
-  }, [player]);
+  }, [handleDraggingProcess, player, stopDraggingProcess, updateProgress]);
 
   return {
     progressBarRef,

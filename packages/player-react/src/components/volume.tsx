@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { bem } from 'easy-audio-player-shared';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 
 interface PlayerVolumeProps {
@@ -14,7 +14,9 @@ const useVolume = (onVolumeChange: (volume: number) => void) => {
   const [isVolumeOpen, setIsVolumeOpen] = useState(true);
 
   const handleVolumeBarClick = useCallback((event: React.MouseEvent) => {
-    if (!volumeBarRef.current?.parentElement) return;
+    if (!volumeBarRef.current?.parentElement) {
+      return;
+    }
     setIsVolumeOpen(true);
     const bounds = volumeBarRef.current.parentElement.getBoundingClientRect();
     const y = bounds.bottom - event.clientY;
@@ -24,9 +26,13 @@ const useVolume = (onVolumeChange: (volume: number) => void) => {
   }, []);
 
   const handleDraggingVolume = useCallback((event: MouseEvent) => {
-    if (!volumeBarRef.current?.parentElement) return;
+    if (!volumeBarRef.current?.parentElement) {
+      return;
+    }
     const bounds = volumeBarRef.current.parentElement.getBoundingClientRect();
-    if (bounds.height === 0) return;
+    if (bounds.height === 0) {
+      return;
+    }
     const y = bounds.bottom - event.clientY;
     const percentage =
       Math.round(Math.max(0, Math.min((y / bounds.height) * 100, 100))) / 100;
@@ -36,14 +42,17 @@ const useVolume = (onVolumeChange: (volume: number) => void) => {
   const stopDraggingVolume = useCallback(() => {
     document.removeEventListener('mousemove', handleDraggingVolume);
     document.removeEventListener('mouseup', stopDraggingVolume);
-  }, []);
+  }, [handleDraggingVolume]);
 
-  const startDraggingVolume = useCallback((event: React.MouseEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
-    document.addEventListener('mousemove', handleDraggingVolume);
-    document.addEventListener('mouseup', stopDraggingVolume);
-  }, []);
+  const startDraggingVolume = useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation();
+      event.preventDefault();
+      document.addEventListener('mousemove', handleDraggingVolume);
+      document.addEventListener('mouseup', stopDraggingVolume);
+    },
+    [handleDraggingVolume, stopDraggingVolume],
+  );
 
   const toggleVolumeOpen = useCallback(() => {
     setIsVolumeOpen(prev => !prev);
@@ -60,7 +69,7 @@ const useVolume = (onVolumeChange: (volume: number) => void) => {
       document.removeEventListener('mousemove', handleDraggingVolume);
       document.removeEventListener('mouseup', stopDraggingVolume);
     };
-  }, []);
+  }, [handleDraggingVolume, stopDraggingVolume]);
 
   return {
     volumeBarRef,

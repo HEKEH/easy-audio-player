@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { EasyAudioPlayerProps, bem, namespace } from 'easy-audio-player-shared';
-import PlayerVolume from './components/volume';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+
 import PlayerProgress from './components/progress';
+import PlayerVolume from './components/volume';
+
+type EventListener = (event: Event) => void;
 
 const useStopOtherPlayers = (closePlayer: () => void) => {
   const EventName = 'stop-easy-audio-player';
@@ -13,11 +16,13 @@ const useStopOtherPlayers = (closePlayer: () => void) => {
         detail: { excludedId: id },
       }),
     );
-  }, []);
+  }, [id]);
 
   const stopOtherPlayersHandler = useCallback(
     (event: CustomEvent<{ excludedId: string }>) => {
-      if (event.detail.excludedId === id) return;
+      if (event.detail.excludedId === id) {
+        return;
+      }
       closePlayer();
     },
     [closePlayer, id],
@@ -34,7 +39,7 @@ const useStopOtherPlayers = (closePlayer: () => void) => {
         stopOtherPlayersHandler as EventListener,
       );
     };
-  }, [closePlayer]);
+  }, [stopOtherPlayersHandler]);
 
   return { stopOtherPlayers };
 };
@@ -50,7 +55,9 @@ const EasyAudioPlayer: React.FC<EasyAudioPlayerProps> = ({
   const { stopOthersOnPlay = true, showDownloadButton = true } = options;
 
   const onUpdateVolume = useCallback((volume: number) => {
-    if (!playerRef.current) return;
+    if (!playerRef.current) {
+      return;
+    }
     playerRef.current.volume = volume;
   }, []);
 
@@ -62,7 +69,9 @@ const EasyAudioPlayer: React.FC<EasyAudioPlayerProps> = ({
   const { stopOtherPlayers } = useStopOtherPlayers(closePlayer);
 
   const togglePlay = useCallback(async () => {
-    if (!playerRef.current) return;
+    if (!playerRef.current) {
+      return;
+    }
 
     try {
       if (playerRef.current.paused) {
@@ -80,11 +89,13 @@ const EasyAudioPlayer: React.FC<EasyAudioPlayerProps> = ({
     } finally {
       setIsLoading(false);
     }
-  }, [closePlayer, stopOtherPlayers]);
+  }, [closePlayer, stopOtherPlayers, stopOthersOnPlay]);
 
   useEffect(() => {
     const player = playerRef.current;
-    if (!player) return;
+    if (!player) {
+      return;
+    }
 
     const onWaiting = () => setIsLoading(true);
     const onCanPlay = () => setIsLoading(false);
