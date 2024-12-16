@@ -1,6 +1,6 @@
 {
   "name": "@hekeh/easy-audio-player-vue",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A simple audio player",
   "keywords": [
     "audio",
@@ -28,7 +28,7 @@
     "check:types": "vue-tsc --declaration --noEmit -p tsconfig.build.json",
     "dev": "pnpm run check:types && vite build --watch",
     "build": "pnpm run check:types && vite build",
-    "copy:readme": "cp ../../README.md .  && cp ../../README.zh-cn.md .",
+    "copy:readme": "ts-node scripts/copy-readme.ts",
     "before:publish": "pnpm run build && pnpm run copy:readme",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
