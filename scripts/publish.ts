@@ -33,6 +33,7 @@ const publishPackage = (packagePath: string) => {
 };
 
 const main = () => {
+  const packageName = process.argv[2] || 'all';
   console.log('[INFO] ==== Starting publish process ====');
 
   console.log('[INFO] Installing dependencies...');
@@ -40,9 +41,17 @@ const main = () => {
 
   console.log('[INFO] Building packages...');
   execSyncWithError('pnpm build');
-
-  publishPackage('packages/player-vue');
-  publishPackage('packages/player-react');
+  if (packageName === 'vue') {
+    publishPackage('packages/player-vue');
+  } else if (packageName === 'react') {
+    publishPackage('packages/player-react');
+  } else if (packageName === 'all') {
+    publishPackage('packages/player-vue');
+    publishPackage('packages/player-react');
+  } else {
+    console.error('[ERROR] Invalid package name');
+    process.exit(1);
+  }
 };
 
 main();
