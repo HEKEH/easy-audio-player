@@ -1,6 +1,6 @@
 {
   "name": "@hekeh/easy-audio-player-vue",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A simple audio player",
   "keywords": [
     "audio",
@@ -45,7 +45,7 @@
     "vue-tsc": "^2.1.10"
   },
   "peerDependencies": {
-    "vue": "^3.0.0"
+    "vue": ">=3.0.0"
   },
   "browserslist": [
     "> 1%",
