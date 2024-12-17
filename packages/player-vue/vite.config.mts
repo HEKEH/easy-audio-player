@@ -18,11 +18,12 @@ export default defineConfig(({ mode }) => {
 
   const config: UserConfig = {
     plugins: [
-      vue() as PluginOption,
-      vueJsx() as PluginOption,
       cssInjectedByJsPlugin({
         styleId: 'easy-audio-player-vue-style',
+        relativeCSSInjection: true, // for multiple format
       }),
+      vue() as PluginOption,
+      vueJsx() as PluginOption,
       dts({
         outDir: 'dist',
         tsconfigPath: './tsconfig.build.json',
