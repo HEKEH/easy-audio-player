@@ -11,6 +11,7 @@ export default antfu(
       'style/member-delimiter-style': 'off',
       'style/multiline-ternary': 'off',
       'style/quote-props': 'off',
+      'no-console': 'warn',
     },
   },
   {

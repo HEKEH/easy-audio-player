@@ -24,18 +24,22 @@ function useProcess(player: HTMLAudioElement | null) {
     setCurrentTime(formatTime(current));
   }, [player]);
 
-  const handleProgressBarClick = (event: React.MouseEvent) => {
-    if (!player || !progressBarRef.current?.parentElement) {
-      return;
-    }
+  const handleProgressBarClick = useCallback(
+    (event: React.MouseEvent) => {
+      if (!player || !progressBarRef.current?.parentElement) {
+        return;
+      }
 
-    const bounds = progressBarRef.current.parentElement.getBoundingClientRect();
-    const x = event.clientX - bounds.left;
-    const width = bounds.width;
-    const newPercent = x / width;
-    setPercent(newPercent);
-    player.currentTime = newPercent * player.duration;
-  };
+      const bounds =
+        progressBarRef.current.parentElement.getBoundingClientRect();
+      const x = event.clientX - bounds.left;
+      const width = bounds.width;
+      const newPercent = x / width;
+      setPercent(newPercent);
+      player.currentTime = newPercent * player.duration;
+    },
+    [player],
+  );
 
   const handleDraggingProcess = useCallback(
     (event: MouseEvent) => {

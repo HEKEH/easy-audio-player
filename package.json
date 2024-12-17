@@ -45,8 +45,7 @@
     "typescript": "~5.5.0",
     "vite": "^5.4.10",
     "vite-plugin-css-injected-by-js": "^3.5.2",
-    "vite-plugin-dts": "^4.3.0",
-    "vue-eslint-parser": "^9.4.3"
+    "vite-plugin-dts": "^4.3.0"
   },
   "lint-staged": {
     "{packages,apps}/**/*.{js,ts,tsx}": [
