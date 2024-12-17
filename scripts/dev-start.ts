@@ -1,4 +1,5 @@
 import { join } from 'path';
+
 import { LogColor, ProjectConfig, startProjects } from './utils';
 
 /** Projects start order */

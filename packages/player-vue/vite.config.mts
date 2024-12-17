@@ -20,7 +20,9 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue() as PluginOption,
       vueJsx() as PluginOption,
-      cssInjectedByJsPlugin(),
+      cssInjectedByJsPlugin({
+        styleId: 'easy-audio-player-vue-style',
+      }),
       dts({
         outDir: 'dist',
         tsconfigPath: './tsconfig.build.json',

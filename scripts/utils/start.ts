@@ -1,4 +1,5 @@
 import { spawn, SpawnOptions } from 'child_process';
+
 import { LogColor, log, logError } from './log';
 
 const runningChildProcesses: ReturnType<typeof spawn>[] = [];
@@ -34,7 +35,9 @@ export function executeCommand(project: ProjectConfig): Promise<void> {
       ) {
         log({ color, projectName, message: 'is ready' });
         resolved = true;
-        resolve();
+        setTimeout(() => {
+          resolve();
+        }, 300);
       }
     });
 

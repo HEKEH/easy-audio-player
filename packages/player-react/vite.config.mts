@@ -18,7 +18,9 @@ export default defineConfig(({ mode }) => {
   const config: UserConfig = {
     plugins: [
       react(),
-      cssInjectedByJsPlugin(),
+      cssInjectedByJsPlugin({
+        styleId: 'easy-audio-player-react-style',
+      }),
       dts({
         outDir: 'dist',
         tsconfigPath: './tsconfig.build.json',
