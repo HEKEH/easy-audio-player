@@ -1,43 +1,16 @@
-<template>
-  <!-- Progress Bar -->
-  <div :class="bem('progress')">
-    <span :class="bem('progress', 'current-time')">{{ currentTime }}</span>
-    <div
-      :class="bem('progress-bar', 'wrapper')"
-      @click="handleProgressBarClick"
-    >
-      <div :class="bem('progress-bar')">
-        <div
-          :class="bem('progress-bar', 'fill')"
-          ref="progressBar"
-          :style="{ width: `${percent * 100}%` }"
-        >
-          <div
-            :class="bem('progress-bar', 'pin')"
-            ref="progressBarPin"
-            @mousedown="startDraggingProcess"
-            @dragstart.prevent
-          ></div>
-        </div>
-      </div>
-    </div>
-    <span :class="bem('progress', 'total-time')">{{ totalTime }}</span>
-  </div>
-</template>
-
 <script lang="ts">
+import { bem, formatTime } from 'easy-audio-player-shared';
 import {
   defineComponent,
   onBeforeUnmount,
+  type PropType,
   ref,
+  type Ref,
   toRef,
   watch,
-  type PropType,
-  type Ref,
 } from 'vue';
-import { formatTime, bem } from 'easy-audio-player-shared';
 
-const useProcess = (player: Ref<HTMLAudioElement | null>) => {
+function useProcess(player: Ref<HTMLAudioElement | null>) {
   const progressBar = ref<HTMLElement | null>(null);
   const progressBarPin = ref<HTMLElement | null>(null);
   const currentTime = ref('00:00');
@@ -46,7 +19,9 @@ const useProcess = (player: Ref<HTMLAudioElement | null>) => {
   const percent = ref(0);
 
   const updateProgress = () => {
-    if (!player.value || !progressBar.value || isDragging.value) return;
+    if (!player.value || !progressBar.value || isDragging.value) {
+      return;
+    }
 
     const current = player.value.currentTime;
     const duration = player.value.duration;
@@ -56,7 +31,9 @@ const useProcess = (player: Ref<HTMLAudioElement | null>) => {
   };
 
   const handleProgressBarClick = (event: MouseEvent) => {
-    if (!player.value || !progressBar.value?.parentElement) return;
+    if (!player.value || !progressBar.value?.parentElement) {
+      return;
+    }
 
     const bounds = progressBar.value.parentElement.getBoundingClientRect();
     const x = event.clientX - bounds.left;
@@ -65,16 +42,10 @@ const useProcess = (player: Ref<HTMLAudioElement | null>) => {
     player.value.currentTime = percent.value * player.value.duration;
   };
 
-  const startDraggingProcess = (event: MouseEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
-    isDragging.value = true;
-    document.addEventListener('mousemove', handleDraggingProcess);
-    document.addEventListener('mouseup', stopDraggingProcess);
-  };
-
   const handleDraggingProcess = (event: MouseEvent) => {
-    if (!player.value || !progressBar.value?.parentElement) return;
+    if (!player.value || !progressBar.value?.parentElement) {
+      return;
+    }
 
     const bounds = progressBar.value.parentElement.getBoundingClientRect();
     const x = Math.max(0, Math.min(event.clientX - bounds.left, bounds.width));
@@ -82,14 +53,23 @@ const useProcess = (player: Ref<HTMLAudioElement | null>) => {
     player.value.currentTime = percent.value * player.value.duration;
   };
 
+  const stopDraggingProcess = () => {
+    isDragging.value = false;
+    // eslint-disable-next-line ts/no-use-before-define
+    removeDraggingProcessListeners();
+  };
+
   const removeDraggingProcessListeners = () => {
     document.removeEventListener('mousemove', handleDraggingProcess);
     document.removeEventListener('mouseup', stopDraggingProcess);
   };
 
-  const stopDraggingProcess = () => {
-    isDragging.value = false;
-    removeDraggingProcessListeners();
+  const startDraggingProcess = (event: MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    isDragging.value = true;
+    document.addEventListener('mousemove', handleDraggingProcess);
+    document.addEventListener('mouseup', stopDraggingProcess);
   };
 
   const playerEvents = {
@@ -135,7 +115,7 @@ const useProcess = (player: Ref<HTMLAudioElement | null>) => {
     handleProgressBarClick,
     startDraggingProcess,
   };
-};
+}
 
 const PlayerProgress = defineComponent({
   name: 'PlayerProgress',
@@ -174,3 +154,30 @@ const PlayerProgress = defineComponent({
 
 export default PlayerProgress;
 </script>
+
+<template>
+  <!-- Progress Bar -->
+  <div :class="bem('progress')">
+    <span :class="bem('progress', 'current-time')">{{ currentTime }}</span>
+    <div
+      :class="bem('progress-bar', 'wrapper')"
+      @click="handleProgressBarClick"
+    >
+      <div :class="bem('progress-bar')">
+        <div
+          ref="progressBar"
+          :class="bem('progress-bar', 'fill')"
+          :style="{ width: `${percent * 100}%` }"
+        >
+          <div
+            ref="progressBarPin"
+            :class="bem('progress-bar', 'pin')"
+            @mousedown="startDraggingProcess"
+            @dragstart.prevent
+          />
+        </div>
+      </div>
+    </div>
+    <span :class="bem('progress', 'total-time')">{{ totalTime }}</span>
+  </div>
+</template>

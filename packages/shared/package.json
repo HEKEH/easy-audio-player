@@ -1,11 +1,8 @@
 {
   "name": "easy-audio-player-shared",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "license": "MIT",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.es.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -17,6 +14,13 @@
       "require": "./dist/style.css"
     }
   },
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
@@ -27,9 +31,5 @@
   "browserslist": [
     "> 1%",
     "not ie 11"
-  ],
-  "files": [
-    "dist",
-    "package.json"
   ]
 }

@@ -1,6 +1,7 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { AliasOptions, defineConfig, UserConfig } from 'vite';
+import type { AliasOptions, UserConfig } from 'vite';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig(() => {

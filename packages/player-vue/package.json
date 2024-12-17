@@ -1,21 +1,18 @@
 {
   "name": "@hekeh/easy-audio-player-vue",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A simple audio player",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HEKEH/easy-audio-player"
+  },
   "keywords": [
     "audio",
     "player",
     "web",
     "vue"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/HEKEH/easy-audio-player"
-  },
-  "license": "MIT",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.es.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -23,6 +20,15 @@
       "require": "./dist/index.cjs.js"
     }
   },
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "README.md",
+    "README.zh-cn.md",
+    "dist",
+    "package.json"
+  ],
   "scripts": {
     "check:types": "vue-tsc --declaration --noEmit -p tsconfig.build.json",
     "dev": "pnpm run check:types && vite build --watch",
@@ -32,29 +38,21 @@
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
   },
+  "peerDependencies": {
+    "vue": ">=3.0.0"
+  },
   "dependencies": {
     "@hekeh/el-popover": "^1.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.4",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
-    "@vue/eslint-config-prettier": "^10.1.0",
-    "@vue/eslint-config-typescript": "^14.1.3",
     "@vue/tsconfig": "^0.6.0",
     "easy-audio-player-shared": "workspace:*",
     "vue-tsc": "^2.1.10"
   },
-  "peerDependencies": {
-    "vue": ">=3.0.0"
-  },
   "browserslist": [
     "> 1%",
     "not ie 11"
-  ],
-  "files": [
-    "dist",
-    "package.json",
-    "README.md",
-    "README.zh-cn.md"
   ]
 }

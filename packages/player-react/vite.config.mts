@@ -1,11 +1,12 @@
+import type { AliasOptions, UserConfig } from 'vite';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import react from '@vitejs/plugin-react';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { AliasOptions, defineConfig, UserConfig } from 'vite';
+import { defineConfig } from 'vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import dts from 'vite-plugin-dts';
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(() => {
   const pkg = JSON.parse(
     readFileSync(new URL('./package.json', import.meta.url), 'utf8'),
   );

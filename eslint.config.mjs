@@ -1,76 +1,27 @@
-import eslint from '@eslint/js';
-import tsEslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import prettier from 'eslint-config-prettier';
-import importPlugin from 'eslint-plugin-import';
-import prettierPlugin from 'eslint-plugin-prettier';
-import globals from 'globals';
+import antfu from '@antfu/eslint-config';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
 
-export default [
-  eslint.configs.recommended,
-  prettier,
+export default antfu(
   {
-    ignores: [
-      '**/node_modules/*',
-      '**/dist/*',
-      '**/build/*',
-      '**/coverage/*',
-      '**/.next/*',
-      '**/public/*',
-    ],
+    rules: {
+      'style/semi': 'off',
+      'style/operator-linebreak': 'off',
+      'style/arrow-parens': 'off',
+      'style/brace-style': 'off',
+      'style/member-delimiter-style': 'off',
+      'style/multiline-ternary': 'off',
+      'style/quote-props': 'off',
+    },
   },
   {
-    files: ['**/*.{js,jsx,ts,tsx,vue}'],
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-      },
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-    },
+    files: ['packages/player-react/**/*.{js,jsx,ts,tsx}'],
     plugins: {
-      '@typescript-eslint': tsEslint,
-      prettier: prettierPlugin,
-      import: importPlugin,
+      'react-hooks': reactHooksPlugin,
     },
     rules: {
-      // 基础代码风格规则
-      'prettier/prettier': 'error',
-      'no-console': 'off',
-      curly: ['error', 'all'],
-
-      // TypeScript基础规则
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_' },
-      ],
-
-      // Import规则
-      'import/order': [
-        'error',
-        {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-          ],
-          'newlines-between': 'always',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
-          },
-        },
-      ],
-      'import/no-duplicates': 'error',
-      'no-unused-vars': 'warn',
+      ...reactHooksPlugin.configs.recommended.rules,
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
-];
+);

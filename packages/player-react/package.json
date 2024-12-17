@@ -1,21 +1,18 @@
 {
   "name": "@hekeh/easy-audio-player-react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A simple audio player",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HEKEH/easy-audio-player"
+  },
   "keywords": [
     "audio",
     "player",
     "web",
     "react"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/HEKEH/easy-audio-player"
-  },
-  "license": "MIT",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.es.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -23,6 +20,15 @@
       "require": "./dist/index.cjs.js"
     }
   },
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "README.md",
+    "README.zh-cn.md",
+    "dist",
+    "package.json"
+  ],
   "scripts": {
     "check:types": "tsc --declaration --noEmit -p tsconfig.build.json",
     "dev": "pnpm run check:types && vite build --watch",
@@ -31,6 +37,10 @@
     "before:publish": "pnpm run copy:readme",
     "lint": "eslint",
     "preinstall": "npx only-allow pnpm"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0",
+    "react-dom": ">=16.0.0"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
@@ -43,18 +53,8 @@
     "easy-audio-player-shared": "workspace:*",
     "globals": "^15.13.0"
   },
-  "peerDependencies": {
-    "react": ">=16.0.0",
-    "react-dom": ">=16.0.0"
-  },
   "browserslist": [
     "> 1%",
     "not ie 11"
-  ],
-  "files": [
-    "dist",
-    "package.json",
-    "README.md",
-    "README.zh-cn.md"
   ]
 }

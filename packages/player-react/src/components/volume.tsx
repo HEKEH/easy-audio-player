@@ -6,15 +6,16 @@ interface PlayerVolumeProps {
   onVolumeChange: (volume: number) => void;
 }
 
-const useVolume = (onVolumeChange: (volume: number) => void) => {
+function useVolume(onVolumeChange: (volume: number) => void) {
   const volumeBarRef = useRef<HTMLDivElement>(null);
   const volumeBarPinRef = useRef<HTMLDivElement>(null);
   const volumeBarWrapperRef = useRef<HTMLDivElement>(null);
   const [volumePercentage, setVolumePercentage] = useState(1);
   const [isVolumeOpen, setIsVolumeOpen] = useState(true);
+  const isDraggingRef = useRef(false);
 
   const handleVolumeBarClick = useCallback((event: React.MouseEvent) => {
-    if (!volumeBarRef.current?.parentElement) {
+    if (!volumeBarRef.current?.parentElement || isDraggingRef.current) {
       return;
     }
     setIsVolumeOpen(true);
@@ -40,6 +41,7 @@ const useVolume = (onVolumeChange: (volume: number) => void) => {
   }, []);
 
   const stopDraggingVolume = useCallback(() => {
+    isDraggingRef.current = false;
     document.removeEventListener('mousemove', handleDraggingVolume);
     document.removeEventListener('mouseup', stopDraggingVolume);
   }, [handleDraggingVolume]);
@@ -48,6 +50,7 @@ const useVolume = (onVolumeChange: (volume: number) => void) => {
     (event: React.MouseEvent) => {
       event.stopPropagation();
       event.preventDefault();
+      isDraggingRef.current = true;
       document.addEventListener('mousemove', handleDraggingVolume);
       document.addEventListener('mouseup', stopDraggingVolume);
     },
@@ -67,9 +70,14 @@ const useVolume = (onVolumeChange: (volume: number) => void) => {
   useEffect(() => {
     return () => {
       document.removeEventListener('mousemove', handleDraggingVolume);
+    };
+  }, [handleDraggingVolume]);
+
+  useEffect(() => {
+    return () => {
       document.removeEventListener('mouseup', stopDraggingVolume);
     };
-  }, [handleDraggingVolume, stopDraggingVolume]);
+  }, [stopDraggingVolume]);
 
   return {
     volumeBarRef,
@@ -80,7 +88,7 @@ const useVolume = (onVolumeChange: (volume: number) => void) => {
     startDraggingVolume,
     toggleVolumeOpen,
   };
-};
+}
 
 const PlayerVolume: React.FC<PlayerVolumeProps> = ({ onVolumeChange }) => {
   const {

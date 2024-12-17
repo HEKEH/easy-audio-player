@@ -1,8 +1,8 @@
 {
   "name": "easy-audio-player",
   "version": "0.0.0",
-  "description": "A simple audio player",
   "packageManager": "pnpm@9.0.0",
+  "description": "A simple audio player",
   "repository": {
     "type": "git",
     "url": "https://github.com/HEKEH/easy-audio-player"
@@ -14,6 +14,10 @@
     "vue",
     "react"
   ],
+  "engines": {
+    "node": ">= 14",
+    "pnpm": ">= 6"
+  },
   "scripts": {
     "dev": "cross-env ts-node scripts/dev-start.ts",
     "build": "cross-env turbo build --filter=!easy-audio-player-demo",
@@ -23,22 +27,15 @@
     "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^3.12.0",
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
-    "@eslint/js": "^9.15.0",
+    "@eslint/js": "^9.17.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^22.9.0",
-    "@typescript-eslint/eslint-plugin": "^8.14.0",
-    "@typescript-eslint/parser": "^8.14.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.14.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react": "^7.37.2",
+    "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-vue": "^9.31.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
@@ -48,15 +45,12 @@
     "typescript": "~5.5.0",
     "vite": "^5.4.10",
     "vite-plugin-css-injected-by-js": "^3.5.2",
-    "vite-plugin-dts": "^4.3.0"
+    "vite-plugin-dts": "^4.3.0",
+    "vue-eslint-parser": "^9.4.3"
   },
   "lint-staged": {
     "{packages,apps}/**/*.{js,ts,tsx}": [
       "eslint --fix --color"
     ]
-  },
-  "engines": {
-    "node": ">= 14",
-    "pnpm": ">= 6"
   }
 }

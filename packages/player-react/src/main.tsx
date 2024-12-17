@@ -1,4 +1,5 @@
-import { EasyAudioPlayerProps, bem, namespace } from 'easy-audio-player-shared';
+import type { EasyAudioPlayerProps } from 'easy-audio-player-shared';
+import { bem, namespace } from 'easy-audio-player-shared';
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import PlayerProgress from './components/progress';
@@ -6,7 +7,7 @@ import PlayerVolume from './components/volume';
 
 type EventListener = (event: Event) => void;
 
-const useStopOtherPlayers = (closePlayer: () => void) => {
+function useStopOtherPlayers(closePlayer: () => void) {
   const EventName = 'stop-easy-audio-player';
   const id = useId();
 
@@ -42,7 +43,7 @@ const useStopOtherPlayers = (closePlayer: () => void) => {
   }, [stopOtherPlayersHandler]);
 
   return { stopOtherPlayers };
-};
+}
 
 const EasyAudioPlayer: React.FC<EasyAudioPlayerProps> = ({
   url,

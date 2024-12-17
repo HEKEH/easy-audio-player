@@ -1,74 +1,23 @@
-<template>
-  <div :class="namespace" ref="container">
-    <div :class="bem('controls')">
-      <!-- Play/Pause Button -->
-      <button
-        :class="[
-          bem('pause-btn'),
-          { [bem('pause-btn', '', 'loading')]: isLoading },
-        ]"
-        @click="togglePlay"
-        :disabled="isLoading"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 18 24"
-          :class="bem('pause-btn', 'icon')"
-        >
-          <path
-            fill-rule="evenodd"
-            :d="isPlaying ? 'M0 0h6v24H0zM12 0h6v24h-6z' : 'M18 12L0 24V0'"
-          />
-        </svg>
-      </button>
-
-      <!-- Progress Bar -->
-      <player-progress :player="player" />
-
-      <div :class="bem('right-controls')">
-        <!-- Volume Controls -->
-        <player-volume @update:volume="onUpdateVolume" />
-        <!-- Download Button -->
-        <button
-          v-if="showDownloadButton"
-          :class="bem('control-btn')"
-          @click="downloadAudio"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            :class="bem('control-btn', 'icon')"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M19 9h-4V3H9v6H5l7 8 7-8zM5 18v3h14v-3H5z"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <audio ref="player" :src="url" preload="metadata"></audio>
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
+import type {
+  AudioPlayerOptions,
+  EasyAudioPlayerProps,
+} from 'easy-audio-player-shared';
+import { bem, namespace } from 'easy-audio-player-shared';
 import {
   computed,
   defineComponent,
   onBeforeUnmount,
   onMounted,
+  type PropType,
   ref,
   useId,
-  type PropType,
 } from 'vue';
-import type {
-  AudioPlayerOptions,
-  EasyAudioPlayerProps,
-} from 'easy-audio-player-shared';
-import PlayerVolume from './components/volume.vue';
+
 import PlayerProgress from './components/progress.vue';
-import { namespace, bem } from 'easy-audio-player-shared';
+import PlayerVolume from './components/volume.vue';
+
+type EventListener = (e: Event) => void;
 
 const EasyAudioPlayer = defineComponent({
   name: 'EasyAudioPlayer',
@@ -96,7 +45,9 @@ const EasyAudioPlayer = defineComponent({
     const { stopOthersOnPlay = true } = props.options;
 
     const onUpdateVolume = (volume: number) => {
-      if (!player.value) return;
+      if (!player.value) {
+        return;
+      }
       player.value.volume = volume;
     };
 
@@ -108,7 +59,9 @@ const EasyAudioPlayer = defineComponent({
     const { stopOtherPlayers } = useStopOtherPlayers(closePlayer);
 
     const togglePlay = async () => {
-      if (!player.value) return;
+      if (!player.value) {
+        return;
+      }
 
       try {
         if (player.value.paused) {
@@ -138,14 +91,18 @@ const EasyAudioPlayer = defineComponent({
     };
 
     onMounted(() => {
-      if (!player.value) return;
+      if (!player.value) {
+        return;
+      }
       Object.entries(playerEvents).forEach(([event, handler]) => {
         player.value?.addEventListener(event, handler);
       });
     });
 
     onBeforeUnmount(() => {
-      if (!player.value) return;
+      if (!player.value) {
+        return;
+      }
 
       Object.entries(playerEvents).forEach(([event, handler]) => {
         player.value?.removeEventListener(event, handler);
@@ -176,7 +133,7 @@ const EasyAudioPlayer = defineComponent({
   },
 });
 
-const useStopOtherPlayers = (closePlayer: () => void) => {
+function useStopOtherPlayers(closePlayer: () => void) {
   const EventName = 'stop-easy-audio-player';
   const id = useId();
   const stopOtherPlayers = () => {
@@ -192,7 +149,9 @@ const useStopOtherPlayers = (closePlayer: () => void) => {
       excludedId: string;
     }>,
   ) => {
-    if (event.detail.excludedId === id) return;
+    if (event.detail.excludedId === id) {
+      return;
+    }
     closePlayer();
   };
 
@@ -209,7 +168,61 @@ const useStopOtherPlayers = (closePlayer: () => void) => {
     );
   });
   return { stopOtherPlayers };
-};
+}
 
 export default EasyAudioPlayer;
 </script>
+
+<template>
+  <div ref="container" :class="namespace">
+    <div :class="bem('controls')">
+      <!-- Play/Pause Button -->
+      <button
+        :class="[
+          bem('pause-btn'),
+          { [bem('pause-btn', '', 'loading')]: isLoading },
+        ]"
+        :disabled="isLoading"
+        @click="togglePlay"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 18 24"
+          :class="bem('pause-btn', 'icon')"
+        >
+          <path
+            fill-rule="evenodd"
+            :d="isPlaying ? 'M0 0h6v24H0zM12 0h6v24h-6z' : 'M18 12L0 24V0'"
+          />
+        </svg>
+      </button>
+
+      <!-- Progress Bar -->
+      <PlayerProgress :player="player" />
+
+      <div :class="bem('right-controls')">
+        <!-- Volume Controls -->
+        <PlayerVolume @update:volume="onUpdateVolume" />
+        <!-- Download Button -->
+        <button
+          v-if="showDownloadButton"
+          :class="bem('control-btn')"
+          @click="downloadAudio"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            :class="bem('control-btn', 'icon')"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M19 9h-4V3H9v6H5l7 8 7-8zM5 18v3h14v-3H5z"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <audio ref="player" :src="url" preload="metadata" />
+    </div>
+  </div>
+</template>

@@ -1,20 +1,20 @@
-import { formatTime, bem } from 'easy-audio-player-shared';
+import { bem, formatTime } from 'easy-audio-player-shared';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface PlayerProgressProps {
   player: HTMLAudioElement | null;
 }
 
-const useProcess = (player: HTMLAudioElement | null) => {
+function useProcess(player: HTMLAudioElement | null) {
   const progressBarRef = useRef<HTMLDivElement>(null);
   const progressBarPinRef = useRef<HTMLDivElement>(null);
   const [currentTime, setCurrentTime] = useState('00:00');
   const [totalTime, setTotalTime] = useState('00:00');
-  const [isDragging, setIsDragging] = useState(false);
+  const isDraggingRef = useRef(false);
   const [percent, setPercent] = useState(0);
 
   const updateProgress = useCallback(() => {
-    if (!player || !progressBarRef.current || isDragging) {
+    if (!player || !progressBarRef.current || isDraggingRef.current) {
       return;
     }
 
@@ -22,7 +22,7 @@ const useProcess = (player: HTMLAudioElement | null) => {
     const duration = player.duration;
     setPercent(current / duration);
     setCurrentTime(formatTime(current));
-  }, [isDragging, player]);
+  }, [player]);
 
   const handleProgressBarClick = (event: React.MouseEvent) => {
     if (!player || !progressBarRef.current?.parentElement) {
@@ -57,18 +57,21 @@ const useProcess = (player: HTMLAudioElement | null) => {
   );
 
   const stopDraggingProcess = useCallback(() => {
-    setIsDragging(false);
+    isDraggingRef.current = false;
     document.removeEventListener('mousemove', handleDraggingProcess);
     document.removeEventListener('mouseup', stopDraggingProcess);
   }, [handleDraggingProcess]);
 
-  const startDraggingProcess = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
-    setIsDragging(true);
-    document.addEventListener('mousemove', handleDraggingProcess);
-    document.addEventListener('mouseup', stopDraggingProcess);
-  };
+  const startDraggingProcess = useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation();
+      event.preventDefault();
+      isDraggingRef.current = true;
+      document.addEventListener('mousemove', handleDraggingProcess);
+      document.addEventListener('mouseup', stopDraggingProcess);
+    },
+    [handleDraggingProcess, stopDraggingProcess],
+  );
 
   useEffect(() => {
     if (!player) {
@@ -85,10 +88,15 @@ const useProcess = (player: HTMLAudioElement | null) => {
     return () => {
       player.removeEventListener('timeupdate', updateProgress);
       player.removeEventListener('loadedmetadata', handleLoadedMetadata);
+    };
+  }, [player, updateProgress]);
+
+  useEffect(() => {
+    return () => {
       document.removeEventListener('mousemove', handleDraggingProcess);
       document.removeEventListener('mouseup', stopDraggingProcess);
     };
-  }, [handleDraggingProcess, player, stopDraggingProcess, updateProgress]);
+  }, [handleDraggingProcess, stopDraggingProcess]);
 
   return {
     progressBarRef,
@@ -99,7 +107,7 @@ const useProcess = (player: HTMLAudioElement | null) => {
     handleProgressBarClick,
     startDraggingProcess,
   };
-};
+}
 
 const PlayerProgress: React.FC<PlayerProgressProps> = ({ player }) => {
   const {
