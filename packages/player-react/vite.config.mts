@@ -42,6 +42,12 @@ export default defineConfig(({ mode }) => {
           ...Object.keys(pkg.dependencies || {}),
           ...Object.keys(pkg.peerDependencies || {}),
         ],
+        output: {
+          globals: {
+            react: 'React',
+            'react-dom': 'ReactDOM',
+          },
+        },
       },
       sourcemap: false,
     },

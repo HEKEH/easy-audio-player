@@ -9,8 +9,8 @@ export default defineConfig(() => {
   );
 
   const alias: AliasOptions = {
-    '~': resolve(__dirname, './src/'),
-    '@': resolve(__dirname, './'),
+    // '~': resolve(__dirname, './src/'),
+    // '@': resolve(__dirname, './'),
   };
 
   const config: UserConfig = {
