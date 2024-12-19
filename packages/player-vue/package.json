@@ -1,6 +1,6 @@
 {
   "name": "@hekeh/easy-audio-player-vue",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A simple audio player",
   "license": "MIT",
   "repository": {
@@ -42,7 +42,7 @@
     "vue": ">=3.0.0"
   },
   "dependencies": {
-    "@hekeh/el-popover": "^1.0.0"
+    "@hekeh/el-popover": "^1.0.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.4",
